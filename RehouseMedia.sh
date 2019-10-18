@@ -7,11 +7,12 @@ debug_echo() {
     echo "$1"
   fi
 }
-
+#Error out if missing source files
 if [ -z "$1" ] || [ ! -f "$1" ]; then
   echo "Missing source file"
   exit 1
 fi
+#Error out if missing a target owner
 if [ -z "$2" ]; then
   echo "Missing target owner"
   exit 1
@@ -44,6 +45,7 @@ SOURCE_MONTH="$(echo $1 | sed -r 's/^[^0-9]*[0-9]{4}-?([0-9]{2}).*/\1/')"
 #Perform final sort of the files into Dropbox folder based on the month/year and whether audio, photos or video files
 # N.B. this doesn't have to be a dropbox folder, can be anything you chose it to be e.g. Amazon Photos, Amazon Drive.
 debug_echo "Moving $1 to ~/Dropbox/$TARGET/$SOURCE_YEAR/$SOURCE_YEAR-$SOURCE_MONTH/"
+#Make directories as needed per year and month
 mkdir -p "$HOME/Dropbox/$TARGET/$SOURCE_YEAR/$SOURCE_YEAR-$SOURCE_MONTH/"
 if [ -n "$DEBUG" ]; then
   mv -v "$1" "$HOME/Dropbox/$TARGET/$SOURCE_YEAR/$SOURCE_YEAR-$SOURCE_MONTH/"
