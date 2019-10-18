@@ -4,7 +4,15 @@ library="$HOME/Upstreams/"
 function help() {
   echo "Syntax: $0 'filename'"
   exit 1
-
+}
+function help_file() {
+  echo "Missing file! (You may have passed a directory?)"
+  help
+}
+function help_notavailable() {
+  echo "This file does not exist. Skipping."
+  exit 0
+}
 if [ ! -f "$1" ]; then help_file; fi
 filename="$(basename "$1")"
 md5_original="$(md5sum "$1" | cut -d\  -f1)"
